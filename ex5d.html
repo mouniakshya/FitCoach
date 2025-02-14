@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>CSS Box Model Example</title>
+    <style>
+        .box-model {
+            width: 300px; /* Content width */
+            height:200px
+            padding-right: 120px;
+            padding-left: 20px; /* Padding around content */
+            border: 10px solid green; /* Border around padding */
+            margin: 20px; /* Margin outside border */
+            background-color: blue;
+            box-sizing: border-box; /* Include padding and border in total width */
+        }
+    </style>
+</head>
+<body>
+    <div class="box-model">
+        <p>This is box 1 with content. The content, padding, border, and margin are shown.</p>
+    </div>
+     <div class="box-model">
+        <p>This is box 1 with content. The content, padding, border, and margin are shown.</p>
+    </div>
+</body>
+</html>
