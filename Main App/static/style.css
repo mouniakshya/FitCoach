@@ -1,0 +1,219 @@
+/* =========================================================
+   AI GYM COACH - MODERN ATHLETIC THEME
+========================================================= */
+
+:root {
+  --bg-primary: #0A0E17;
+  --bg-secondary: #121826;
+  --bg-card: #182032;
+  --bg-card-hover: #1F2942;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(0, 240, 255, 0.4);
+  --accent-cyan: #00F0FF;
+  --accent-emerald: #10B981;
+  --accent-amber: #F59E0B;
+  --accent-coral: #EF4444;
+  --accent-violet: #8B5CF6;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+/* Base Body & App */
+.stApp {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 40%);
+  color: var(--text-primary);
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+  background-color: var(--bg-secondary) !important;
+  border-right: 1px solid var(--border-color) !important;
+}
+
+[data-testid="stSidebar"] hr {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Container fluid width */
+.block-container {
+  padding-top: 2rem !important;
+  padding-bottom: 3.5rem !important;
+  max-width: 1280px !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Tabs Styling */
+.stTabs [data-baseweb="tab-list"] {
+  gap: 8px;
+  background-color: rgba(18, 24, 38, 0.8);
+  padding: 6px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+}
+
+.stTabs [data-baseweb="tab"] {
+  border-radius: var(--radius-sm);
+  padding: 8px 18px !important;
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+  border: none !important;
+  background: transparent !important;
+  transition: all 0.2s ease;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+  color: var(--accent-cyan) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.stTabs [aria-selected="true"] {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(16, 185, 129, 0.15)) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(0, 240, 255, 0.35) !important;
+}
+
+.stTabs [data-baseweb="tab-highlight"] {
+  display: none !important;
+}
+
+/* Metric Cards */
+[data-testid="stMetric"] {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 1rem 1.25rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+[data-testid="stMetric"]:hover {
+  border-color: rgba(0, 240, 255, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+[data-testid="stMetricLabel"] p {
+  color: var(--text-secondary) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+[data-testid="stMetricValue"] {
+  font-size: 1.85rem !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+}
+
+/* Buttons */
+.stButton button {
+  border-radius: var(--radius-sm) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  padding: 0.55rem 1.25rem !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--bg-card) !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s ease !important;
+}
+
+.stButton button:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: var(--accent-cyan) !important;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.25) !important;
+}
+
+.stButton button[kind="primary"] {
+  background: linear-gradient(135deg, #00F0FF 0%, #10B981 100%) !important;
+  color: #050B14 !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+
+.stButton button[kind="primary"]:hover {
+  opacity: 0.92;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
+}
+
+/* Containers / Bordered Cards */
+[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] {
+  border-radius: var(--radius-md) !important;
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Fields & Selectboxes */
+[data-baseweb="select"] > div,
+[data-testid="stNumberInputContainer"],
+[data-testid="stTextInput"] > div {
+  background-color: var(--bg-card) !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--border-color) !important;
+  color: #FFFFFF !important;
+}
+
+[data-baseweb="select"] > div:hover,
+[data-testid="stNumberInputContainer"]:hover,
+[data-testid="stTextInput"] > div:hover {
+  border-color: var(--accent-cyan) !important;
+}
+
+/* Form Styles */
+.stForm {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 1.5rem !important;
+}
+
+/* Tables & Dataframes */
+[data-testid="stTable"],
+.stDataFrame {
+  border-radius: var(--radius-md) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* Progress bar */
+.stProgress > div > div > div > div {
+  background: linear-gradient(90deg, #00F0FF, #10B981) !important;
+  border-radius: 999px !important;
+}
+
+/* Alert Boxes */
+[data-testid="stAlert"] {
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* Pulse Glow Animation */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.5); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 240, 255, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+}
+
+.live-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  animation: pulse-ring 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  margin-right: 8px;
+}
