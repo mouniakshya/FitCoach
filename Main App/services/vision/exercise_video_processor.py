@@ -148,7 +148,7 @@ class VideoProcessorClass(VideoProcessorBase):
         self._draw_hud_card(img, 15, 15, w - 30, 60, bg_color=(12, 16, 24), border_color=(0, 200, 255), alpha=0.7)
         cv2.putText(
             img,
-            f"AI COACH: {ex_type.upper()}",
+            f"FITCOACH: {ex_type.upper()}",
             (30, 52),
             cv2.FONT_HERSHEY_DUPLEX,
             0.75,

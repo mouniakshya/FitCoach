@@ -1,86 +1,79 @@
-# 🏋️‍♂️ AI Gym Coach — Real-Time Workout Intelligence & Form Coach
+# FitCoach - Real-Time Workout Intelligence & Form Assessment
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.54.0-FF4B4B.svg)](https://streamlit.io/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.54.0-blue.svg)](https://streamlit.io/)
 [![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10.14-00C0FF.svg)](https://developers.google.com/mediapipe)
-[![Groq LLaMA 3.3](https://img.shields.io/badge/LLM-Groq%20LLaMA%203.3-F55036.svg)](https://groq.com/)
+[![Groq LLaMA 3.3](https://img.shields.io/badge/LLM-Groq%20LLaMA%203.3-orange.svg)](https://groq.com/)
 
-A modern, high-performance computer vision fitness companion that turns your webcam into an elite personal trainer. Tracks joint biometrics, evaluates form in real time, counts reps, estimates calorie expenditure, enforces rest intervals, and delivers spoken audio cues with customizable coaching personas.
-
----
-
-## ✨ Features & Capabilities
-
-### 1. 👁️ Real-Time Computer Vision & Biometrics
-- **MediaPipe Pose Landmarker** integration via low-latency WebRTC streaming.
-- **Dynamic Joint Skeleton**: Color-coded feedback (Emerald when clean, Amber/Red when form faults are detected).
-- **In-Video HUD Overlay**: On-screen rep counter, exercise stage, joint angles, and real-time biomechanical diagnostics.
-
-### 2. 🏋️ 7 Supported Exercises
-- **Squats**: Knee angle tracking (depth ≤ 100°), hip-shoulder posture, and forward lean detection.
-- **Push-ups**: Elbow flexion (90° lockout), rigid plank body alignment, and hip sag/pike warnings.
-- **Biceps Curls (Dumbbell)**: Full extension/flexion tracking, elbow drift prevention, and torso swing detection.
-- **Shoulder Press**: Overhead vertical extension lockout, elbow angle, and lumbar hyperextension prevention.
-- **Lunges**: Front knee flexion (~90°), torso verticality, and lateral balance stabilization.
-- **Jumping Jacks *(NEW)***: Full-body cardio tracking, arm sweep reach (>120°), and lateral leg spread ratios.
-- **Isometric Plank *(NEW)***: Core hold timer, 160°–180° rigid alignment check, and hip height deviation detection.
-
-### 3. 🎙️ AI Voice Coaching (Online & Smart Offline Fallback)
-- **Groq LLaMA 3.3 70B Integration**: Generates natural, punchy, contextual coaching cues based on detected movement.
-- **Three Coach Personas**:
-  - ⚡ **Energetic Coach**: High-energy, positive, pumped-up reinforcement.
-  - 🎖️ **Strict Drill Sergeant**: Direct, disciplined, military-standard form adherence.
-  - 🧘 **Mindful Master**: Focused on breath control, cadence, and muscle-mind connection.
-- **Smart Offline Fallback Engine**: If no Groq API key is present or internet drops, high-energy rule-based coaching still speaks aloud via TTS!
-- **Voice Mute & Volume Toggle**: Easily turn audio coaching on or off anytime.
-
-### 4. 🛡️ Form Integrity Score (%)
-- Computes real-time frame-by-frame and rep-by-rep biomechanical quality.
-- Categorizes sessions: *Flawless Form (≥85%)*, *Good Form (70–84%)*, or *Needs Work (<70%)*.
-
-### 5. 🔥 Precision Calorie Expenditure Tracker
-- Estimates calories burned based on **MET (Metabolic Equivalent of Task)** values tailored for each exercise, your configurable body weight (kg), and active exercise duration.
-
-### 6. ⏳ Set-Interval Rest Countdown Timer
-- Automatically triggers upon set completion (or manual start).
-- Audio and visual progress bar countdown (30s / 45s / 60s / 90s) with "Skip Rest" shortcut.
-
-### 7. 📊 Performance & Analytics Dashboard
-- **Streak Tracker**: Tracks consecutive days active with flame badge (🔥).
-- **Daily Rep Goal Meter**: Set personal targets (e.g., 50 reps/day) with live progress bar.
-- **Interactive Visual Charts**: Daily rep volume trends and exercise distribution.
-- **Personal Records (PRs) Showcase**: Hall of Fame highlighting all-time best reps and sets.
-- **CSV Data Export**: Download your full workout log with one click.
-
-### 8. 📖 Exercise Academy & Form Library
-- In-depth movement standards, target muscle groups, common faults, and AI vision detection points for all 7 movements.
+A computer vision fitness application that uses your webcam to assess exercise biomechanics in real time. Features live joint angle calculations, automated rep counting, form fault detection, energy expenditure tracking, set-interval rest timing, and spoken coaching feedback with multiple coaching styles.
 
 ---
 
-## 🚀 Quick Start Guide
+## Features
+
+### 1. Computer Vision & Joint Biometrics
+- Low-latency pose detection powered by MediaPipe Pose Landmarker via WebRTC.
+- Dynamic color-coded skeleton tracking joint alignment and depth.
+- On-screen telemetry HUD with rep count, movement phase, and joint angles.
+
+### 2. 7 Supported Exercises
+- **Squats**: Knee flexion angle (depth <= 100 deg), hip posture, and torso forward lean monitoring.
+- **Push-ups**: Elbow flexion (90 deg depth), rigid spine alignment, and hip sag/pike detection.
+- **Biceps Curls (Dumbbell)**: Full extension/flexion tracking, elbow drift prevention, and torso sway reduction.
+- **Shoulder Press**: Overhead vertical extension, elbow angles, and lumbar arch monitoring.
+- **Lunges**: Front knee flexion (~90 deg), torso verticality, and lateral balance stabilization.
+- **Jumping Jacks**: Full-body cardio tracking, overhead arm sweep (>120 deg), and lateral leg spread ratios.
+- **Isometric Plank**: Core hold duration timer, rigid alignment check (160-180 deg), and hip position detection.
+
+### 3. Audio Coaching (Online & Offline Fallback)
+- **Groq LLaMA 3.3 70B Integration**: Generates natural, concise audio cues based on detected movement.
+- **Three Coaching Styles**:
+  - Energetic Coach: Positive reinforcement and motivating cues.
+  - Strict Drill Sergeant: Direct, disciplined, military-standard execution commands.
+  - Mindful Coach: Focused on deliberate control, tempo, and breathing.
+- **Offline Rule-Based Fallback**: Built-in rules engine ensures spoken audio cues function even without an external API key.
+- **Audio Toggle**: Easily enable or mute voice guidance.
+
+### 4. Form Quality Assessment
+- Evaluates biomechanical execution on every frame and rep.
+- Categorizes sessions: Flawless Form (>= 85%), Acceptable Form (70-84%), or Needs Correction (< 70%).
+
+### 5. Energy Expenditure Estimation
+- Estimates calorie burn based on Metabolic Equivalent of Task (MET) values tailored to each movement, configurable body weight (kg), and active exercise duration.
+
+### 6. Set-Interval Rest Timer
+- Automatically triggers upon set completion with an interactive countdown bar and skip control.
+
+### 7. Performance Analytics & History
+- Streak tracking: Consecutive active workout days.
+- Daily rep target meter with progress bar.
+- Interactive volume and exercise distribution charts.
+- Personal records table highlighting all-time best reps and sets.
+- One-click CSV export of session logs.
+
+### 8. Exercise Academy
+- Movement standards, target muscle groups, common faults, and computer vision detection points for all 7 movements.
+
+---
+
+## Quick Start Guide
 
 ### Prerequisites
 - Python 3.11 or 3.12
-- A webcam for live pose detection
+- Standard webcam
 
-### 1. Clone & Setup Virtual Environment
-```bash
-git clone https://github.com/your-username/ai-gym-coach.git
-cd ai-gym-coach/"Main App"
-
-python -m venv venv
-# On Windows:
+### 1. Clone & Set Up Environment
+```powershell
+cd "d:\ai-gym-coach-main\Main App"
 .\venv\Scripts\activate
-# On Linux/macOS:
-source venv/bin/activate
 ```
 
 ### 2. Install Dependencies
-```bash
+```powershell
 pip install -r requirements.txt
 ```
 
-### 3. Run the Application with Groq API Key (PowerShell)
+### 3. Run Application
 
 #### Option A: Set Environment Variable in PowerShell (Recommended)
 ```powershell
@@ -88,56 +81,41 @@ $env:GROQ_API_KEY = "gsk_your_actual_key_here"
 streamlit run main.py
 ```
 
-#### Option B: Pass Directly as a Command-Line Flag
+#### Option B: Pass via Command-Line Argument
 ```powershell
 streamlit run main.py -- --groq-api-key "gsk_your_actual_key_here"
 ```
 
-#### Option C: Run in Offline Mode (No API Key Required)
+#### Option C: Offline Mode (No Key Required)
 ```powershell
 streamlit run main.py
 ```
-*(If no API key is set, the application seamlessly runs on its built-in rule-based coaching engine with full voice TTS audio).*
+
+The application will be accessible at: `http://localhost:8501`
 
 ---
 
-## 📁 Project Architecture
+## Directory Structure
 
 ```
 ai-gym-coach/
-├── LandingPage/               # Showcase & portfolio landing page
-│   ├── index.html             # High-converting athlete landing page
-│   ├── style.css              # Cyberpunk athletic CSS styling
-│   └── fonts/                 # Averta web fonts
-└── Main App/                  # Core Streamlit Web Application
-    ├── main.py                # Studio UI, Tabbed Navigation & Streamlit logic
-    ├── data.db                # SQLite database for athlete profiles & workouts
-    ├── requirements.txt       # Python dependencies
-    ├── ml_models/
-    │   └── pose_landmarker_full.task  # MediaPipe vision model
-    ├── core/
-    │   └── base_exercise.py   # Base abstract class & geometry math
-    ├── detectors/             # Biomechanical form detection engines
-    │   ├── squat.py           # Squat depth & back angle
-    │   ├── pushup.py          # Push-up elbow & hip sag
-    │   ├── biceps_curl.py     # Curl elbow drift & sway
-    │   ├── shoulder_press.py  # Overhead press lockout & arch
-    │   ├── lunges.py          # Lunge depth & lateral balance
-    │   ├── jumping_jacks.py   # Cardio arm sweep & leg spread
-    │   └── plank.py           # Core alignment & hold timer
-    ├── services/
-    │   ├── auth/              # Athlete login & profile loader
-    │   ├── coaching/          # LLM, TTS, Personas & Voice Pipeline
-    │   ├── config/            # Exercise METs, guides, prompts
-    │   ├── persistence/       # SQLite schema, migrations & analytics queries
-    │   ├── tracking/          # Calorie calculation & form accuracy
-    │   ├── ui/                # CSS injection & font loader
-    │   └── vision/            # WebRTC video processor & HUD renderer
-    └── static/
-        └── style.css          # Modern dark-mode athletic styling
+|-- README.md                  # Main documentation (root)
+|-- LandingPage/               # Standalone marketing landing page
+|   |-- index.html
+|   `-- style.css
+`-- Main App/                  # Core application directory
+    |-- README.md              # Application documentation
+    |-- main.py                # Main Streamlit application entry point
+    |-- data.db                # SQLite database for profiles and session history
+    |-- requirements.txt       # Python dependencies
+    |-- ml_models/             # MediaPipe task models
+    |-- core/                  # Base exercise class and vector math
+    |-- detectors/             # Exercise-specific movement engines
+    |-- services/              # Auth, vision, tracking, coaching, persistence
+    `-- static/                # Modern light-mode stylesheet and fonts
 ```
 
 ---
 
-## 🛡️ License
-Distributed under the MIT License. Built for athletes and fitness enthusiasts.
+## License
+Distributed under the MIT License.

@@ -7,29 +7,29 @@ def render_login_wall():
     if st.session_state.get("user_id") is not None:
         return True
 
-    # Header with aesthetic badge
+    # Clean Header
     st.markdown(
         """
         <div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
-            <div style="display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3); color: #00F0FF; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">
-                ⚡ Computer Vision · Voice Coaching · Biometrics
+            <div style="display: inline-block; padding: 4px 14px; border-radius: 4px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;">
+                Computer Vision · Biometric Feedback · Audio Coaching
             </div>
-            <h1 style="font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, #FFFFFF 0%, #A0AEC0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px 0;">
-                AI Gym Coach
+            <h1 style="font-size: 2.6rem; font-weight: 800; color: #0F172A; margin: 0 0 10px 0;">
+                FitCoach
             </h1>
-            <p style="font-size: 1.15rem; color: #94A3B8; max-width: 580px; margin: 0 auto 2rem auto;">
-                Real-time pose estimation, proactive form correction, rep tracking, and personalized audio coaching right through your webcam.
+            <p style="font-size: 1.05rem; color: #475569; max-width: 580px; margin: 0 auto 2rem auto; line-height: 1.5;">
+                Real-time pose estimation, automated form assessment, rep counting, and audio feedback through your camera.
             </p>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([1, 1.8, 1])
     with col2:
         with st.container(border=True):
-            st.markdown("#### 👤 Athlete Access")
-            st.caption("Sign in with your athlete name or pick an existing profile.")
+            st.markdown("#### Athlete Sign-In")
+            st.caption("Sign in with an athlete name or select an existing profile to begin.")
 
             conn = _get_connection()
             existing_users = []
@@ -42,19 +42,19 @@ def render_login_wall():
             selected_existing = None
             if existing_users:
                 selected_existing = st.selectbox(
-                    "Quick Pick Athlete:",
-                    options=["-- Or select existing athlete --"] + existing_users,
+                    "Select Existing Athlete Profile:",
+                    options=["-- New Athlete Profile --"] + existing_users,
                     index=0
                 )
 
             with st.form("login_form", clear_on_submit=False):
-                default_name = selected_existing if selected_existing and selected_existing != "-- Or select existing athlete --" else ""
+                default_name = selected_existing if selected_existing and selected_existing != "-- New Athlete Profile --" else ""
                 username = st.text_input(
-                    "Athlete Username",
+                    "Athlete Name",
                     value=default_name,
                     placeholder="e.g. Alex, Jordan, Sarah"
                 )
-                submit_button = st.form_submit_button("Enter Gym Studio →", width="stretch")
+                submit_button = st.form_submit_button("Enter Studio", type="primary", use_container_width=True)
 
             if submit_button:
                 cleaned_name = (username or "").strip()
@@ -73,16 +73,16 @@ def render_login_wall():
                 st.session_state["coach_personality"] = profile["coach_personality"]
                 st.session_state["voice_enabled"] = profile["voice_enabled"]
 
-                st.success(f"Welcome back, **{cleaned_name}**! Entering studio...")
+                st.success(f"Signed in as {cleaned_name}. Entering studio...")
                 st.rerun()
 
-        # Feature badges at bottom of login
+        # Architecture notes
         st.markdown(
             """
-            <div style="display: flex; justify-content: space-around; text-align: center; margin-top: 1.5rem; color: #64748B; font-size: 0.85rem;">
-                <div>🔒 Local SQLite DB</div>
-                <div>⚡ Zero Wearables</div>
-                <div>🎙️ Real-time Audio Cues</div>
+            <div style="display: flex; justify-content: space-around; text-align: center; margin-top: 1.5rem; color: #64748B; font-size: 0.8rem; font-weight: 500;">
+                <div>[Local SQLite Database]</div>
+                <div>[Zero Wearables Needed]</div>
+                <div>[Real-Time Vision Pipeline]</div>
             </div>
             """,
             unsafe_allow_html=True

@@ -1,33 +1,33 @@
 /* =========================================================
-   AI GYM COACH - MODERN ATHLETIC THEME
+   FITCOACH - PROFESSIONAL LIGHT MODE DESIGN SYSTEM
 ========================================================= */
 
 :root {
-  --bg-primary: #0A0E17;
-  --bg-secondary: #121826;
-  --bg-card: #182032;
-  --bg-card-hover: #1F2942;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(0, 240, 255, 0.4);
-  --accent-cyan: #00F0FF;
-  --accent-emerald: #10B981;
-  --accent-amber: #F59E0B;
-  --accent-coral: #EF4444;
-  --accent-violet: #8B5CF6;
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
+  --border-color: #E2E8F0;
+  --border-hover: #CBD5E1;
+  --border-focus: #2563EB;
+  --accent-primary: #2563EB;
+  --accent-primary-hover: #1D4ED8;
+  --accent-success: #16A34A;
+  --accent-warning: #D97706;
+  --accent-danger: #DC2626;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
 }
 
-/* Base Body & App */
+/* Base Body & App Canvas */
 .stApp {
-  background-color: var(--bg-primary);
-  background-image: 
-    radial-gradient(circle at 15% 10%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 40%);
-  color: var(--text-primary);
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 /* Sidebar */
@@ -37,28 +37,32 @@
 }
 
 [data-testid="stSidebar"] hr {
-  border-color: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-color) !important;
 }
 
-/* Container fluid width */
+/* Layout Container */
 .block-container {
-  padding-top: 2rem !important;
+  padding-top: 1.75rem !important;
   padding-bottom: 3.5rem !important;
-  max-width: 1280px !important;
+  max-width: 1320px !important;
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  color: #FFFFFF !important;
+  color: var(--text-primary) !important;
   font-weight: 700 !important;
   letter-spacing: -0.02em !important;
 }
 
-/* Tabs Styling */
+p, span, label, div {
+  color: inherit;
+}
+
+/* Tabs Styling - Clean Segmented Control */
 .stTabs [data-baseweb="tab-list"] {
-  gap: 8px;
-  background-color: rgba(18, 24, 38, 0.8);
-  padding: 6px;
+  gap: 4px;
+  background-color: #F1F5F9;
+  padding: 4px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   margin-bottom: 1.5rem;
@@ -66,23 +70,25 @@ h1, h2, h3, h4, h5, h6 {
 
 .stTabs [data-baseweb="tab"] {
   border-radius: var(--radius-sm);
-  padding: 8px 18px !important;
-  color: var(--text-secondary) !important;
+  padding: 8px 20px !important;
+  color: var(--text-muted) !important;
   font-weight: 600 !important;
+  font-size: 0.9rem !important;
   border: none !important;
   background: transparent !important;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .stTabs [data-baseweb="tab"]:hover {
-  color: var(--accent-cyan) !important;
-  background: rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-primary) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
 }
 
 .stTabs [aria-selected="true"] {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(16, 185, 129, 0.15)) !important;
-  color: #FFFFFF !important;
-  border: 1px solid rgba(0, 240, 255, 0.35) !important;
+  background: #FFFFFF !important;
+  color: var(--accent-primary) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
 }
 
 .stTabs [data-baseweb="tab-highlight"] {
@@ -95,81 +101,92 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-md) !important;
   padding: 1rem 1.25rem !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 [data-testid="stMetric"]:hover {
-  border-color: rgba(0, 240, 255, 0.3) !important;
-  transform: translateY(-2px);
+  border-color: var(--border-hover) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
 }
 
 [data-testid="stMetricLabel"] p {
-  color: var(--text-secondary) !important;
-  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  font-size: 0.78rem !important;
   font-weight: 600 !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
+  letter-spacing: 0.06em !important;
 }
 
 [data-testid="stMetricValue"] {
-  font-size: 1.85rem !important;
+  font-size: 1.75rem !important;
   font-weight: 800 !important;
-  color: #FFFFFF !important;
+  color: var(--text-primary) !important;
 }
 
 /* Buttons */
 .stButton button {
   border-radius: var(--radius-sm) !important;
   font-weight: 600 !important;
-  letter-spacing: 0.02em !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.01em !important;
   padding: 0.55rem 1.25rem !important;
   border: 1px solid var(--border-color) !important;
-  background: var(--bg-card) !important;
-  color: #FFFFFF !important;
-  transition: all 0.2s ease !important;
+  background: #FFFFFF !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.15s ease !important;
 }
 
 .stButton button:hover {
-  background: var(--bg-card-hover) !important;
-  border-color: var(--accent-cyan) !important;
-  box-shadow: 0 0 14px rgba(0, 240, 255, 0.25) !important;
+  background: #F8FAFC !important;
+  border-color: var(--border-hover) !important;
+  color: var(--text-primary) !important;
 }
 
 .stButton button[kind="primary"] {
-  background: linear-gradient(135deg, #00F0FF 0%, #10B981 100%) !important;
-  color: #050B14 !important;
-  border: none !important;
-  font-weight: 700 !important;
+  background: var(--accent-primary) !important;
+  color: #FFFFFF !important;
+  border: 1px solid var(--accent-primary) !important;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;
 }
 
 .stButton button[kind="primary"]:hover {
-  opacity: 0.92;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
+  background: var(--accent-primary-hover) !important;
+  border-color: var(--accent-primary-hover) !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35) !important;
 }
 
-/* Containers / Bordered Cards */
+/* Bordered Containers & Cards */
 [data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] {
   border-radius: var(--radius-md) !important;
-  background-color: var(--bg-secondary) !important;
+  background-color: var(--bg-card) !important;
   border: 1px solid var(--border-color) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
 }
 
 /* Input Fields & Selectboxes */
 [data-baseweb="select"] > div,
 [data-testid="stNumberInputContainer"],
 [data-testid="stTextInput"] > div {
-  background-color: var(--bg-card) !important;
+  background-color: #FFFFFF !important;
   border-radius: var(--radius-sm) !important;
-  border: 1px solid var(--border-color) !important;
-  color: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
 }
 
 [data-baseweb="select"] > div:hover,
 [data-testid="stNumberInputContainer"]:hover,
 [data-testid="stTextInput"] > div:hover {
-  border-color: var(--accent-cyan) !important;
+  border-color: #94A3B8 !important;
+}
+
+[data-baseweb="select"] > div:focus-within,
+[data-testid="stNumberInputContainer"]:focus-within,
+[data-testid="stTextInput"] > div:focus-within {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15) !important;
 }
 
 /* Form Styles */
@@ -178,11 +195,13 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-md) !important;
   padding: 1.5rem !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
 }
 
-/* Tables & Dataframes */
+/* Tables & DataFrames */
 [data-testid="stTable"],
 .stDataFrame {
+  background: #FFFFFF !important;
   border-radius: var(--radius-md) !important;
   overflow: hidden !important;
   border: 1px solid var(--border-color) !important;
@@ -190,30 +209,47 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Progress bar */
 .stProgress > div > div > div > div {
-  background: linear-gradient(90deg, #00F0FF, #10B981) !important;
+  background: var(--accent-primary) !important;
   border-radius: 999px !important;
 }
 
-/* Alert Boxes */
+.stProgress > div > div > div {
+  background-color: #E2E8F0 !important;
+}
+
+/* Alert / Info Boxes */
 [data-testid="stAlert"] {
-  border-radius: var(--radius-md) !important;
+  border-radius: var(--radius-sm) !important;
   border: 1px solid var(--border-color) !important;
+  background-color: #F8FAFC !important;
 }
 
-/* Pulse Glow Animation */
-@keyframes pulse-ring {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.5); }
-  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 240, 255, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+/* Expander */
+.stExpander {
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--border-color) !important;
+  background-color: #FFFFFF !important;
 }
 
-.live-indicator {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
+/* Status Dot Badge */
+.status-badge-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #15803D;
+  background: #DCFCE7;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1px solid #BBF7D0;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background-color: #10B981;
-  box-shadow: 0 0 8px #10B981;
-  animation: pulse-ring 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
-  margin-right: 8px;
+  background-color: #16A34A;
 }

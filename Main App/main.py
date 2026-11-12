@@ -32,7 +32,6 @@ from services.coaching.voice_pipeline import VoicePipeline, autoplay_audio
 
 def resolve_groq_api_key():
     """Resolves Groq API key prioritizing PowerShell environment, CLI args, session, or .env."""
-    # 1. Check CLI argument passed via terminal: streamlit run main.py -- --groq-api-key "gsk_..."
     for i, arg in enumerate(sys.argv):
         if arg in ["--groq-api-key", "--api-key", "--groq-key"] and i + 1 < len(sys.argv):
             return sys.argv[i + 1].strip(), "CLI Flag"
@@ -41,17 +40,14 @@ def resolve_groq_api_key():
         if arg.startswith("--api-key="):
             return arg.split("=", 1)[1].strip(), "CLI Flag"
 
-    # 2. Check PowerShell environment variable ($env:GROQ_API_KEY)
     env_key = os.environ.get("GROQ_API_KEY", "").strip()
     if env_key:
         return env_key, "Terminal Environment ($env:GROQ_API_KEY)"
 
-    # 3. Check UI session state (entered in Settings tab)
     session_key = st.session_state.get("groq_api_key", "").strip()
     if session_key:
         return session_key, "Settings Tab Input"
 
-    # 4. Check Streamlit secrets if present
     if hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
         return str(st.secrets["GROQ_API_KEY"]).strip(), "Streamlit Secrets"
 
@@ -78,8 +74,8 @@ def setup_voice_pipeline():
 
 def main():
     st.set_page_config(
-        page_icon="🏋️‍♂️",
-        page_title="AI Gym Coach - Studio",
+        page_icon=None,
+        page_title="FitCoach - Studio",
         initial_sidebar_state="collapsed",
         layout="wide"
     )
@@ -100,19 +96,19 @@ def main():
     user_id = st.session_state.get("user_id", 0)
     username = st.session_state.get("username", "Athlete")
 
-    # Top Navigation Bar & Athlete Header
+    # Header Bar
     head_col1, head_col2 = st.columns([3, 1])
     with head_col1:
         st.markdown(
             f"""
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
-                <span style="font-size: 2rem;">🏋️‍♂️</span>
-                <div>
-                    <h2 style="margin: 0; font-size: 1.85rem; font-weight: 800; background: linear-gradient(135deg, #00F0FF, #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                        AI Gym Coach
+            <div style="margin-bottom: 0.5rem;">
+                <div style="display: flex; align-items: baseline; gap: 10px;">
+                    <h2 style="margin: 0; font-size: 1.85rem; font-weight: 800; color: #0F172A;">
+                        FitCoach
                     </h2>
-                    <span style="color: #94A3B8; font-size: 0.88rem;">Computer Vision Form Coach & Workout Intelligence</span>
+                    <span style="font-size: 0.8rem; font-weight: 700; background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1px solid #BFDBFE;">STUDIO v2.0</span>
                 </div>
+                <div style="color: #475569; font-size: 0.9rem; margin-top: 2px;">Real-Time Computer Vision & Biometric Posture Guidance</div>
             </div>
             """,
             unsafe_allow_html=True
@@ -120,9 +116,9 @@ def main():
     with head_col2:
         st.markdown(
             f"""
-            <div style="text-align: right; padding-top: 8px;">
-                <span style="background: rgba(255, 255, 255, 0.06); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem;">
-                    👤 <strong>{username}</strong>
+            <div style="text-align: right; padding-top: 6px;">
+                <span style="background: #FFFFFF; padding: 6px 14px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.88rem; color: #0F172A; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+                    Athlete: <strong>{username}</strong>
                 </span>
             </div>
             """,
@@ -132,14 +128,14 @@ def main():
     # Audio Playback
     if st.session_state.get("audio_to_play"):
         autoplay_audio(st.session_state.audio_to_play)
-        st.session_state.audio_to_play = None  # Clear so it only plays once
+        st.session_state.audio_to_play = None
 
-    # Primary App Tabs
+    # Primary App Navigation Tabs
     tab_studio, tab_analytics, tab_academy, tab_settings = st.tabs([
-        "🏋️ Workout Studio",
-        "📊 Analytics & Performance",
-        "📖 Exercise Academy",
-        "⚙️ Profile & Coach Settings"
+        "Workout Studio",
+        "Analytics & Performance",
+        "Exercise Academy",
+        "Profile & Settings"
     ])
 
     # =========================================================================
@@ -174,9 +170,9 @@ def render_workout_studio():
     if st.session_state.get("coach_feedback"):
         st.markdown(
             f"""
-            <div style="background: rgba(0, 240, 255, 0.08); border-left: 4px solid #00F0FF; padding: 12px 18px; border-radius: 8px; margin-bottom: 1.25rem;">
-                <span style="color: #00F0FF; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">🎙️ Live Coach Cue:</span>
-                <p style="margin: 4px 0 0 0; font-size: 1.05rem; color: #FFFFFF; font-weight: 500;">
+            <div style="background: #EFF6FF; border-left: 4px solid #2563EB; padding: 12px 18px; border-radius: 6px; margin-bottom: 1.25rem;">
+                <span style="color: #1D4ED8; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;">Live Audio Cue:</span>
+                <p style="margin: 4px 0 0 0; font-size: 1.05rem; color: #0F172A; font-weight: 600;">
                     "{st.session_state.coach_feedback}"
                 </p>
             </div>
@@ -185,14 +181,13 @@ def render_workout_studio():
         )
 
     if not workout_started:
-        # Pre-workout Plan Configuration
-        st.markdown("### 🎯 Setup Your Workout Session")
+        st.markdown("### Workout Setup")
         col_plan, col_preview = st.columns([1.2, 1])
 
         with col_plan:
             with st.container(border=True):
                 plan_exercise = st.selectbox(
-                    "Choose Exercise",
+                    "Select Exercise",
                     options=EXERCISE_OPTIONS,
                     index=EXERCISE_OPTIONS.index(st.session_state.get("plan_exercise", "Squats")) if st.session_state.get("plan_exercise", "Squats") in EXERCISE_OPTIONS else 0,
                     key="plan_exercise_input"
@@ -213,10 +208,10 @@ def render_workout_studio():
                 est_time_sec = (plan_sets * plan_reps * 3) if not is_plank else (plan_sets * plan_reps)
                 est_cals = round(met_val * user_weight * (est_time_sec / 3600.0), 1)
 
-                st.caption(f"🔥 Est. Energy Output: ~**{est_cals} kcal** ({round(est_time_sec / 60, 1)} mins active work)")
+                st.caption(f"Estimated Energy Expenditure: ~{est_cals} kcal ({round(est_time_sec / 60, 1)} minutes active time)")
 
-                st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-                start_btn = st.button("🚀 Start Workout Session", type="primary", use_container_width=True)
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                start_btn = st.button("Start Workout", type="primary", use_container_width=True)
 
                 if start_btn:
                     st.session_state.exercise_type = plan_exercise
@@ -252,14 +247,13 @@ def render_workout_studio():
         with col_preview:
             guide = EXERCISE_GUIDES.get(plan_exercise, {})
             with st.container(border=True):
-                st.markdown(f"#### 💡 {guide.get('title', plan_exercise)}")
-                st.markdown(f"**Target Muscles:** `{guide.get('target_muscles', 'Core')}`")
-                st.markdown(f"**Form Standard:** {guide.get('ideal_form', '')}")
-                st.markdown("**Key Faults to Avoid:**")
+                st.markdown(f"#### Movement Overview: {guide.get('title', plan_exercise)}")
+                st.markdown(f"**Target Muscle Groups:** `{guide.get('target_muscles', 'Core')}`")
+                st.markdown(f"**Execution Standard:** {guide.get('ideal_form', '')}")
+                st.markdown("**Common Biomechanical Errors:**")
                 for err in guide.get("common_mistakes", []):
-                    st.markdown(f"- ⚠️ {err}")
+                    st.markdown(f"- {err}")
     else:
-        # Live Workout Active Screen
         render_active_workout_screen()
 
 
@@ -288,7 +282,7 @@ def render_active_workout_screen():
                 result = st.session_state.voice_pipeline.process_event(
                     event="rest_ended",
                     exercise=exercise,
-                    metrics={"issue": "Rest period finished! Time for the next set!"}
+                    metrics={"issue": "Rest interval ended. Begin the next set."}
                 )
                 if result:
                     st.session_state.audio_to_play, st.session_state.coach_feedback = result
@@ -297,12 +291,12 @@ def render_active_workout_screen():
             with st.container(border=True):
                 c_t1, c_t2, c_t3 = st.columns([2, 1, 1])
                 with c_t1:
-                    st.markdown(f"### ⏳ Rest Interval: **{remaining_rest}s remaining**")
+                    st.markdown(f"### Rest Interval: **{remaining_rest}s remaining**")
                     st.progress((rest_duration - remaining_rest) / float(rest_duration))
                 with c_t2:
-                    st.caption("Catch your breath and hydrate before your next set.")
+                    st.caption("Deep breaths and hydration before your next set.")
                 with c_t3:
-                    if st.button("Skip Rest →", use_container_width=True):
+                    if st.button("Skip Rest", use_container_width=True):
                         st.session_state.rest_timer_active = False
                         st.rerun()
 
@@ -312,9 +306,17 @@ def render_active_workout_screen():
         with st.container(border=True):
             sub_col1, sub_col2 = st.columns([3, 1])
             with sub_col1:
-                st.markdown(f"<span class='live-indicator'></span> **LIVE SESSION: {exercise.upper()}**", unsafe_allow_html=True)
+                st.markdown(
+                    f"""
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="status-badge-active"><span class="status-dot"></span> LIVE</span>
+                        <strong style="color:#0F172A; font-size:1.05rem;">{exercise.upper()}</strong>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
             with sub_col2:
-                if st.button("⏹️ End Workout", key="end_workout_btn", use_container_width=True):
+                if st.button("End Workout", key="end_workout_btn", use_container_width=True):
                     st.session_state.workout_started = False
                     st.session_state.workout_completed = True
                     if st.session_state.voice_pipeline:
@@ -347,34 +349,33 @@ def render_active_workout_screen():
     with col_metrics:
         # Progress Cards
         with st.container(border=True):
-            st.markdown("#### ⚡ Real-Time Counters")
+            st.markdown("#### Real-Time Telemetry")
             m1, m2 = st.columns(2)
             with m1:
                 st.metric("Current Set", f"{current_reps} / {reps_per_set} {rep_unit}")
             with m2:
-                st.metric("Sets Logged", f"{sets_completed} / {target_sets}")
+                st.metric("Sets Completed", f"{sets_completed} / {target_sets}")
 
-            # Set Progress bar
             progress_ratio = min(1.0, current_reps / max(1, reps_per_set))
             st.progress(progress_ratio)
 
             m3, m4 = st.columns(2)
             with m3:
-                st.metric("Total Output", f"{total_reps} {rep_unit}")
+                st.metric("Total Count", f"{total_reps} {rep_unit}")
             with m4:
                 st.metric("Calories Burned", f"{calories} kcal")
 
         # Form Accuracy Meter
         with st.container(border=True):
-            st.markdown("#### 🛡️ Form Integrity")
-            form_color = "#10B981" if form_score >= 85 else ("#F59E0B" if form_score >= 70 else "#EF4444")
-            form_status = "EXCELLENT" if form_score >= 85 else ("GOOD" if form_score >= 70 else "NEEDS WORK")
+            st.markdown("#### Form Quality Assessment")
+            form_color = "#16A34A" if form_score >= 85 else ("#D97706" if form_score >= 70 else "#DC2626")
+            form_status = "FLAWLESS" if form_score >= 85 else ("ACCEPTABLE" if form_score >= 70 else "NEEDS CORRECTION")
 
             st.markdown(
                 f"""
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
                     <span style="font-size: 1.6rem; font-weight: 800; color: {form_color};">{form_score}%</span>
-                    <span style="background: rgba(255, 255, 255, 0.08); padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; color: {form_color};">
+                    <span style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; color: {form_color};">
                         {form_status}
                     </span>
                 </div>
@@ -383,68 +384,68 @@ def render_active_workout_screen():
             )
             st.progress(max(0.0, min(1.0, form_score / 100.0)))
 
-        # Specific Exercise Angles & Biometrics
+        # Specific Exercise Angles
         with st.container(border=True):
-            st.markdown("#### 📐 Biometric Telemetry")
+            st.markdown("#### Joint Angles & Alignment")
             if exercise == "Squats":
                 s1, s2 = st.columns(2)
                 with s1:
-                    st.metric("Knee Angle", f"{st.session_state.get('knee_angle', 0)}°")
+                    st.metric("Knee Angle", f"{st.session_state.get('knee_angle', 0)} deg")
                 with s2:
-                    st.metric("Back Angle", f"{st.session_state.get('back_angle', 0)}°")
+                    st.metric("Back Angle", f"{st.session_state.get('back_angle', 0)} deg")
                 st.markdown(f"**Depth Status:** `{st.session_state.get('depth_status', 'N/A')}`")
 
             elif exercise == "Push-ups":
                 p1, p2 = st.columns(2)
                 with p1:
-                    st.metric("Elbow Angle", f"{st.session_state.get('elbow_angle', 0)}°")
+                    st.metric("Elbow Flexion", f"{st.session_state.get('elbow_angle', 0)} deg")
                 with p2:
-                    st.metric("Hip Alignment", st.session_state.get('hip_status', 'N/A'))
+                    st.metric("Hip Line", st.session_state.get('hip_status', 'N/A'))
                 st.markdown(f"**Body Alignment:** `{st.session_state.get('body_alignment', 'N/A')}`")
 
             elif exercise == "Biceps Curls (Dumbbell)":
                 b1, b2 = st.columns(2)
                 with b1:
-                    st.metric("Elbow Flex", f"{st.session_state.get('elbow_angle', 0)}°")
+                    st.metric("Elbow Angle", f"{st.session_state.get('elbow_angle', 0)} deg")
                 with b2:
-                    st.metric("Shoulder", st.session_state.get('shoulder_status', 'N/A'))
-                st.markdown(f"**Torso Swing:** `{st.session_state.get('swing_status', 'N/A')}`")
+                    st.metric("Shoulder Stability", st.session_state.get('shoulder_status', 'N/A'))
+                st.markdown(f"**Torso Sway:** `{st.session_state.get('swing_status', 'N/A')}`")
 
             elif exercise == "Shoulder Press":
                 sh1, sh2 = st.columns(2)
                 with sh1:
-                    st.metric("Elbow Angle", f"{st.session_state.get('elbow_angle', 0)}°")
+                    st.metric("Elbow Angle", f"{st.session_state.get('elbow_angle', 0)} deg")
                 with sh2:
-                    st.metric("Extension", st.session_state.get('extension_status', 'N/A'))
-                st.markdown(f"**Spine Arch:** `{st.session_state.get('back_arch_status', 'N/A')}`")
+                    st.metric("Extension Status", st.session_state.get('extension_status', 'N/A'))
+                st.markdown(f"**Spine Curvature:** `{st.session_state.get('back_arch_status', 'N/A')}`")
 
             elif exercise == "Lunges":
                 l1, l2 = st.columns(2)
                 with l1:
-                    st.metric("Lead Knee", f"{st.session_state.get('front_knee_angle', 0)}°")
+                    st.metric("Lead Knee Angle", f"{st.session_state.get('front_knee_angle', 0)} deg")
                 with l2:
-                    st.metric("Torso Tilt", f"{st.session_state.get('torso_angle', 0)}°")
-                st.markdown(f"**Balance:** `{st.session_state.get('balance_status', 'N/A')}`")
+                    st.metric("Torso Incline", f"{st.session_state.get('torso_angle', 0)} deg")
+                st.markdown(f"**Balance Stability:** `{st.session_state.get('balance_status', 'N/A')}`")
 
             elif exercise == "Jumping Jacks":
                 j1, j2 = st.columns(2)
                 with j1:
-                    st.metric("Arm Sweep", f"{st.session_state.get('arm_angle', 0)}°")
+                    st.metric("Arm Sweep", f"{st.session_state.get('arm_angle', 0)} deg")
                 with j2:
-                    st.metric("Leg Spread", f"{st.session_state.get('leg_spread_ratio', 1.0)}x")
-                st.markdown(f"**Motion Phase:** `{st.session_state.get('motion_phase', 'READY')}`")
+                    st.metric("Leg Abduction", f"{st.session_state.get('leg_spread_ratio', 1.0)}x")
+                st.markdown(f"**Cadence Phase:** `{st.session_state.get('motion_phase', 'READY')}`")
 
             elif exercise == "Plank":
                 pl1, pl2 = st.columns(2)
                 with pl1:
-                    st.metric("Hold Time", f"{st.session_state.get('hold_seconds', 0)}s")
+                    st.metric("Hold Duration", f"{st.session_state.get('hold_seconds', 0)}s")
                 with pl2:
                     st.metric("Hip Position", st.session_state.get('hip_status', 'N/A'))
-                st.markdown(f"**Core Rigidness:** `{st.session_state.get('body_alignment', 'N/A')}`")
+                st.markdown(f"**Rigidity:** `{st.session_state.get('body_alignment', 'N/A')}`")
 
-        # Quick Rest Trigger
+        # Rest Interval Trigger
         if not st.session_state.get("rest_timer_active", False):
-            if st.button("⏱️ Take Rest Interval", use_container_width=True):
+            if st.button("Start Rest Interval", use_container_width=True):
                 st.session_state.rest_timer_active = True
                 st.session_state.rest_start_time = time.time()
                 st.session_state.rest_duration = st.session_state.get("rest_interval_seconds", 45)
@@ -452,89 +453,89 @@ def render_active_workout_screen():
 
 
 def render_analytics(user_id: int):
-    st.markdown("### 📊 Workout Analytics & Progress")
+    st.markdown("### Performance Analytics & Session History")
 
     stats = get_user_stats(user_id)
     profile = get_user_profile(user_id)
     daily_goal = profile.get("daily_goal_reps", 50)
     today_reps = stats.get("today_reps", 0)
 
-    # Top KPI Strip
+    # Top Metric Tiles
     kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
     with kpi1:
-        st.metric("🔥 Workout Streak", f"{stats.get('streak_days', 0)} Days")
+        st.metric("Active Streak", f"{stats.get('streak_days', 0)} Days")
     with kpi2:
         st.metric("Total Reps Logged", f"{stats.get('total_reps', 0):,}")
     with kpi3:
-        st.metric("Total Calories", f"{stats.get('total_calories', 0):,.1f} kcal")
+        st.metric("Total Energy", f"{stats.get('total_calories', 0):,.1f} kcal")
     with kpi4:
         st.metric("Average Form Score", f"{stats.get('avg_form_score', 100.0):.1f}%")
     with kpi5:
         total_mins = round(stats.get('total_time', 0) / 60, 1)
-        st.metric("Total Time", f"{total_mins} mins")
+        st.metric("Total Duration", f"{total_mins} mins")
 
-    # Daily Goal Progress
+    # Daily Goal Progress Bar
     with st.container(border=True):
         goal_pct = min(1.0, today_reps / max(1, daily_goal))
         st.markdown(
             f"""
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong>🎯 Today's Rep Goal: {today_reps} / {daily_goal} Reps</strong>
-                <span style="color:#00F0FF; font-weight:700;">{int(goal_pct * 100)}%</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                <strong style="color:#0F172A;">Daily Rep Target: {today_reps} / {daily_goal} Reps</strong>
+                <span style="color:#2563EB; font-weight:700;">{int(goal_pct * 100)}%</span>
             </div>
             """,
             unsafe_allow_html=True
         )
         st.progress(goal_pct)
 
-    # History Data
+    # Raw History Check
     raw_history = get_users_exercises(user_id)
     if not raw_history:
-        st.info("No workout sessions recorded yet. Complete your first workout in the Studio to view trends and charts!")
+        st.info("No recorded workouts yet. Complete a session in the Workout Studio to populate analytics.")
         return
 
     df = pd.DataFrame([dict(r) for r in raw_history])
     df["Date"] = pd.to_datetime(df["created_at"]).dt.date
 
-    # Interactive Visual Charts
+    # Charts
     col_chart1, col_chart2 = st.columns(2)
 
     with col_chart1:
         with st.container(border=True):
-            st.markdown("#### 📈 Daily Rep Volume")
+            st.markdown("#### Daily Volume Trend")
             daily_reps = df.groupby("Date")["reps"].sum().reset_index()
             daily_reps = daily_reps.sort_values("Date")
             daily_reps.set_index("Date", inplace=True)
-            st.bar_chart(daily_reps["reps"], color="#00F0FF")
+            st.bar_chart(daily_reps["reps"], color="#2563EB")
 
     with col_chart2:
         with st.container(border=True):
-            st.markdown("#### ⚡ Exercise Distribution")
+            st.markdown("#### Exercise Volume Distribution")
             ex_dist = df.groupby("exercise_name")["reps"].sum().reset_index()
             ex_dist.set_index("exercise_name", inplace=True)
-            st.bar_chart(ex_dist["reps"], color="#10B981")
+            st.bar_chart(ex_dist["reps"], color="#0284C7")
 
-    # Personal Records (PRs)
+    # Personal Records
     prs = get_user_personal_records(user_id)
     if prs:
-        st.markdown("#### 🏆 Personal Records (PRs)")
+        st.markdown("#### Personal Records")
         pr_cols = st.columns(min(len(prs), 4))
         for idx, pr in enumerate(prs[:4]):
             with pr_cols[idx]:
                 with st.container(border=True):
-                    st.caption(f"🎖️ {pr['exercise_name']}")
+                    st.caption(f"{pr['exercise_name']}")
                     st.markdown(f"### {pr['max_reps']} Reps")
-                    st.caption(f"Best Sets: {pr['max_sets']} | Max Cals: {pr['max_calories']} kcal")
+                    st.caption(f"Sets: {pr['max_sets']} | Energy: {pr['max_calories']} kcal")
 
-    # Detailed Log Table with Filters & CSV Export
-    st.markdown("#### 📋 Session Log")
+    # Session History Table
+    st.markdown("#### Session History Log")
     col_f1, col_f2 = st.columns([2, 1])
     with col_f1:
-        filter_ex = st.multiselect("Filter by Exercise", options=df["exercise_name"].unique())
+        filter_ex = st.multiselect("Filter by Movement", options=df["exercise_name"].unique())
     with col_f2:
         csv_data = df.to_csv(index=False).encode('utf-8')
         st.download_button(
-            label="📥 Export History (CSV)",
+            label="Export History (CSV)",
             data=csv_data,
             file_name=f"workout_history_{user_id}.csv",
             mime="text/csv",
@@ -557,10 +558,10 @@ def render_analytics(user_id: int):
 
 
 def render_exercise_academy():
-    st.markdown("### 📖 Exercise Academy & Form Library")
-    st.caption("Master pristine biomechanics, joint angles, and safety tips for every movement.")
+    st.markdown("### Exercise Academy & Movement Standards")
+    st.caption("Standard biomechanics, recommended target joint angles, and error prevention guidelines.")
 
-    selected_ex = st.selectbox("Select Exercise Guide", options=EXERCISE_OPTIONS)
+    selected_ex = st.selectbox("Select Movement Guide", options=EXERCISE_OPTIONS)
     guide = EXERCISE_GUIDES.get(selected_ex, {})
 
     col_g1, col_g2 = st.columns([1.5, 1])
@@ -569,46 +570,46 @@ def render_exercise_academy():
         with st.container(border=True):
             st.markdown(f"## {guide.get('title', selected_ex)}")
             st.markdown(f"**Target Muscle Groups:** `{guide.get('target_muscles', 'Core')}`")
-            st.markdown(f"**Experience Level:** `{guide.get('difficulty', 'Intermediate')}`")
+            st.markdown(f"**Difficulty Level:** `{guide.get('difficulty', 'Intermediate')}`")
             st.divider()
 
-            st.markdown("#### 🎯 Execution Standard")
+            st.markdown("#### Execution Standard")
             st.write(guide.get("ideal_form", ""))
 
-            st.markdown("#### ⚠️ Common Biomechanical Mistakes")
+            st.markdown("#### Common Biomechanical Errors")
             for mistake in guide.get("common_mistakes", []):
-                st.markdown(f"- ❌ **{mistake}**")
+                st.markdown(f"- **{mistake}**")
 
     with col_g2:
         with st.container(border=True):
-            st.markdown("#### 🤖 AI Vision Detection Points")
+            st.markdown("#### Computer Vision Keypoints")
             if selected_ex == "Squats":
-                st.markdown("- **Hip-Knee-Ankle Angle:** Monitored for parallel depth (≤ 100°).")
-                st.markdown("- **Torso-Spine Angle:** Checked to prevent excessive forward tilt.")
+                st.markdown("- **Knee Flexion Angle:** Assessed for parallel depth (<= 100 deg).")
+                st.markdown("- **Torso-Spine Inclination:** Monitored to prevent forward tilt.")
             elif selected_ex == "Push-ups":
-                st.markdown("- **Elbow Angle:** Target 90° flexion at bottom.")
-                st.markdown("- **Plank Hip Line:** Detects sagging lumbar and piked hips.")
+                st.markdown("- **Elbow Flexion:** Target 90 deg flexion at lowest position.")
+                st.markdown("- **Plank Line:** Detects sagging lumbar and piked hips.")
             elif selected_ex == "Biceps Curls (Dumbbell)":
-                st.markdown("- **Elbow Drift:** Monitors elbow stability against ribs.")
-                st.markdown("- **Torso Sway:** Flags cheating with back momentum.")
+                st.markdown("- **Elbow Drift:** Monitors elbow stability against torso.")
+                st.markdown("- **Torso Sway:** Evaluates cheating via momentum.")
             elif selected_ex == "Shoulder Press":
-                st.markdown("- **Overhead Lockout:** Target 160°+ extension.")
+                st.markdown("- **Overhead Lockout:** Target 160 deg+ full arm extension.")
                 st.markdown("- **Lower Back Arch:** Prevents excessive lumbar extension.")
             elif selected_ex == "Lunges":
-                st.markdown("- **Front Knee Angle:** 90° depth target.")
-                st.markdown("- **Lateral Balance:** Tracks shoulder-hip center alignment.")
+                st.markdown("- **Lead Knee Angle:** 90 deg depth target.")
+                st.markdown("- **Lateral Balance:** Tracks shoulder-to-hip alignment.")
             elif selected_ex == "Jumping Jacks":
-                st.markdown("- **Arm Abduction:** Tracks full sweep above 120°.")
-                st.markdown("- **Leg Spread:** Ensures dynamic athletic lateral jump.")
+                st.markdown("- **Arm Abduction:** Evaluates overhead sweep above 120 deg.")
+                st.markdown("- **Leg Abduction:** Ensures consistent lateral jumps.")
             elif selected_ex == "Plank":
-                st.markdown("- **Core Alignment:** Straight 160°-180° rigid line.")
-                st.markdown("- **Hold Accumulator:** Only ticks when posture is correct.")
+                st.markdown("- **Core Alignment:** Rigid 160-180 deg straight posture.")
+                st.markdown("- **Hold Accumulator:** Advances only when posture is correct.")
 
-            st.info("💡 Make sure your whole body is visible in the webcam for optimal accuracy.")
+            st.info("Ensure your full body is visible within the camera frame for optimal tracking precision.")
 
 
 def render_settings(user_id: int):
-    st.markdown("### ⚙️ Athlete Profile & Coach Customization")
+    st.markdown("### Profile & Coach Configuration")
 
     profile = get_user_profile(user_id)
 
@@ -616,13 +617,13 @@ def render_settings(user_id: int):
 
     with col1:
         with st.container(border=True):
-            st.markdown("#### 👤 Athlete Biometrics")
+            st.markdown("#### Athlete Biometrics")
             with st.form("athlete_profile_form"):
                 weight = st.number_input("Body Weight (kg)", min_value=30.0, max_value=250.0, value=profile.get("weight_kg", 70.0), step=0.5)
-                daily_goal = st.number_input("Daily Rep Goal", min_value=10, max_value=1000, value=profile.get("daily_goal_reps", 50), step=10)
+                daily_goal = st.number_input("Daily Rep Target", min_value=10, max_value=1000, value=profile.get("daily_goal_reps", 50), step=10)
                 rest_time = st.number_input("Default Rest Interval (Seconds)", min_value=15, max_value=300, value=int(st.session_state.get("rest_interval_seconds", 45)), step=5)
 
-                save_profile_btn = st.form_submit_button("Save Biometrics", use_container_width=True)
+                save_profile_btn = st.form_submit_button("Save Biometrics", type="primary", use_container_width=True)
 
                 if save_profile_btn:
                     st.session_state.user_weight = weight
@@ -635,31 +636,31 @@ def render_settings(user_id: int):
                         coach_personality=st.session_state.get("coach_personality", "Motivational"),
                         voice_enabled=st.session_state.get("voice_enabled", True)
                     )
-                    st.success("Profile biometrics updated successfully!")
+                    st.success("Athlete biometrics updated successfully.")
 
     with col2:
         with st.container(border=True):
-            st.markdown("#### 🤖 AI Coach Persona & Engine")
+            st.markdown("#### Coach Persona & Engine")
             personas_list = list(COACH_PERSONAS.keys())
             current_persona = profile.get("coach_personality", "Motivational")
             current_idx = personas_list.index(current_persona) if current_persona in personas_list else 0
 
-            chosen_persona = st.selectbox("Coach Personality", options=personas_list, index=current_idx)
+            chosen_persona = st.selectbox("Coaching Style", options=personas_list, index=current_idx)
             st.caption(COACH_PERSONAS.get(chosen_persona, {}).get("desc", ""))
 
-            voice_toggle = st.toggle("Enable Voice Audio Cues (TTS)", value=st.session_state.get("voice_enabled", True))
+            voice_toggle = st.toggle("Enable Spoken Audio Cues (TTS)", value=st.session_state.get("voice_enabled", True))
 
             st.divider()
-            st.markdown("##### 🔑 Groq LLaMA 3.3 Engine")
+            st.markdown("##### Groq LLaMA 3.3 Integration")
             active_key, key_src = resolve_groq_api_key()
 
             if active_key:
                 masked = active_key[:7] + "..." + active_key[-4:] if len(active_key) > 12 else "********"
-                st.success(f"🟢 **Active Engine:** Groq LLaMA 3.3 connected via `{key_src}` (`{masked}`)")
+                st.success(f"Active Engine: Groq LLaMA 3.3 connected via {key_src} ({masked})")
             else:
-                st.info("ℹ️ Running on **Smart Offline Engine**. To use LLaMA 3.3, provide an API key via PowerShell terminal or below.")
+                st.info("Running on local offline coaching engine. To enable LLaMA 3.3, enter an API key below or via terminal.")
 
-            with st.expander("💻 How to set from PowerShell Terminal"):
+            with st.expander("Terminal Setup (PowerShell)"):
                 st.code(
                     '# Option A: Set environment variable before running\n'
                     '$env:GROQ_API_KEY = "gsk_your_actual_key_here"\n'
@@ -669,7 +670,7 @@ def render_settings(user_id: int):
                     language="powershell"
                 )
 
-            user_groq_key = st.text_input("Or enter Groq API Key manually", type="password", value=st.session_state.get("groq_api_key", ""), placeholder="gsk_...")
+            user_groq_key = st.text_input("Enter Groq API Key Manually", type="password", value=st.session_state.get("groq_api_key", ""), placeholder="gsk_...")
 
             if st.button("Apply Coach Settings", type="primary", use_container_width=True):
                 st.session_state.coach_personality = chosen_persona
@@ -683,23 +684,23 @@ def render_settings(user_id: int):
                     voice_enabled=voice_toggle
                 )
                 setup_voice_pipeline()
-                st.success("Coach preferences and engine updated!")
+                st.success("Coach preferences and engine updated.")
 
-    # Danger Zone / Account Management
+    # Account Management
     st.divider()
     col_d1, col_d2 = st.columns(2)
     with col_d1:
-        if st.button("🚪 Switch Athlete / Log Out", use_container_width=True):
+        if st.button("Sign Out / Switch Athlete", use_container_width=True):
             st.session_state.user_id = None
             st.session_state.username = None
             st.rerun()
 
     with col_d2:
-        with st.expander("⚠️ Reset Workout Logs"):
-            st.warning("This will permanently delete all workout history for this user.")
+        with st.expander("Clear Workout History"):
+            st.warning("This will permanently delete all session history for this user.")
             if st.button("Confirm Delete History", type="secondary"):
                 delete_user_history(user_id)
-                st.success("Workout history cleared.")
+                st.success("Session history cleared.")
                 st.rerun()
 
 

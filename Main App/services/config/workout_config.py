@@ -66,15 +66,15 @@ EXERCISE_GUIDES = {
     "Squats": {
         "title": "Barbell / Bodyweight Squats",
         "target_muscles": "Quadriceps, Glutes, Hamstrings, Core",
-        "ideal_form": "Keep feet shoulder-width apart. Hinge at hips and knees until thighs are parallel to ground (knee angle ≤ 100°). Keep chest lifted and spine neutral.",
-        "common_mistakes": ["Not squatting deep enough (knee angle > 100°)", "Leaning excessively forward", "Knees caving inwards"],
+        "ideal_form": "Keep feet shoulder-width apart. Hinge at hips and knees until thighs are parallel to ground (knee angle <= 100 deg). Keep chest lifted and spine neutral.",
+        "common_mistakes": ["Not squatting deep enough (knee angle > 100 deg)", "Leaning excessively forward", "Knees caving inwards"],
         "difficulty": "Beginner to Intermediate",
         "rep_label": "Reps"
     },
     "Push-ups": {
         "title": "Standard Push-up",
         "target_muscles": "Chest (Pectorals), Triceps, Front Deltoids, Core",
-        "ideal_form": "Hands slightly wider than shoulders. Maintain a straight rigid line from shoulders through hips down to ankles. Lower chest until elbows bend to 90° or below, then press up to full lockout.",
+        "ideal_form": "Hands slightly wider than shoulders. Maintain a straight rigid line from shoulders through hips down to ankles. Lower chest until elbows bend to 90 deg or below, then press up to full lockout.",
         "common_mistakes": ["Hips sagging down (strains lumbar spine)", "Hips piked up in the air", "Half reps without full elbow bend"],
         "difficulty": "Beginner to Intermediate",
         "rep_label": "Reps"
@@ -82,7 +82,7 @@ EXERCISE_GUIDES = {
     "Biceps Curls (Dumbbell)": {
         "title": "Standing Dumbbell Curl",
         "target_muscles": "Biceps Brachii, Brachialis, Forearms",
-        "ideal_form": "Stand tall with dumbbells at sides. Pin elbows tight against ribcage. Curl weights smoothly upward to around 50° elbow angle without rocking torso. Lower with control.",
+        "ideal_form": "Stand tall with dumbbells at sides. Pin elbows tight against ribcage. Curl weights smoothly upward to around 50 deg elbow angle without rocking torso. Lower with control.",
         "common_mistakes": ["Swinging torso for momentum", "Elbows drifting forward or away from sides", "Incomplete extension at bottom"],
         "difficulty": "Beginner",
         "rep_label": "Reps"
@@ -90,7 +90,7 @@ EXERCISE_GUIDES = {
     "Shoulder Press": {
         "title": "Dumbbell Overhead Shoulder Press",
         "target_muscles": "Deltoids (Anterior & Medial), Upper Traps, Triceps",
-        "ideal_form": "Start with weights at shoulder height (elbows ~90°). Brace your core and press dumbbells vertically overhead to full lockout without hyperextending lower back.",
+        "ideal_form": "Start with weights at shoulder height (elbows ~90 deg). Brace your core and press dumbbells vertically overhead to full lockout without hyperextending lower back.",
         "common_mistakes": ["Excessive lower back hyperextension/arch", "Not locking out arms at top", "Flaring elbows too far back"],
         "difficulty": "Intermediate",
         "rep_label": "Reps"
@@ -98,7 +98,7 @@ EXERCISE_GUIDES = {
     "Lunges": {
         "title": "Alternating Forward Lunges",
         "target_muscles": "Quadriceps, Glutes, Hamstrings, Calves",
-        "ideal_form": "Step forward firmly and lower body until lead thigh is parallel to ground (front knee ~90°). Keep torso upright and balance centered over hips.",
+        "ideal_form": "Step forward firmly and lower body until lead thigh is parallel to ground (front knee ~90 deg). Keep torso upright and balance centered over hips.",
         "common_mistakes": ["Front knee driving too far past toes", "Torso tilting forward", "Loss of lateral balance"],
         "difficulty": "Intermediate",
         "rep_label": "Reps"
@@ -123,24 +123,24 @@ EXERCISE_GUIDES = {
 
 COACH_PERSONAS = {
     "Motivational": {
-        "name": "⚡ Energetic Coach",
+        "name": "Energetic Coach",
         "desc": "High-energy, positive, and enthusiastic motivation to push your limits.",
         "prompt_tone": "High-energy, encouraging, positive, and inspiring. Speak like an enthusiastic top fitness trainer."
     },
     "Drill Sergeant": {
-        "name": "🎖️ Strict Drill Sergeant",
+        "name": "Strict Drill Sergeant",
         "desc": "No-nonsense, direct, demanding discipline and razor-sharp form.",
         "prompt_tone": "Direct, authoritative, strict, and military-style. No fluff, demand focus and proper form."
     },
     "Zen": {
-        "name": "🧘 Mindful Master",
+        "name": "Mindful Coach",
         "desc": "Calm, focused on breathing, mindful movement, and smooth control.",
         "prompt_tone": "Calm, centered, focused on breathing, deliberate control, and posture awareness."
     }
 }
 
 PROMPT = (
-    "You are AI Gym Coach, an elite professional AI gym trainer monitoring a user's workout via live camera.\n\n"
+    "You are FitCoach, an elite professional AI gym trainer monitoring a user's workout via live camera.\n\n"
     "### Your Role\n"
     "Provide concise (around 10-15 words), punchy, natural coaching cues spoken aloud.\n\n"
     "### Input Format\n"
@@ -149,6 +149,6 @@ PROMPT = (
     "- 'Form Issue': A technical description of a pose error (if any).\n\n"
     "### Guidelines\n"
     "1. Speak directly to the athlete in the second person ('Drive through your heels!', 'Keep that chest upright!').\n"
-    "2. Keep it punchy and memorable — exactly what a trainer shouts in the gym.\n"
+    "2. Keep it punchy and memorable -- exactly what a trainer shouts in the gym.\n"
     "3. Prioritize safety and form integrity."
 )
